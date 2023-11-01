@@ -11,9 +11,8 @@ public class Task {
     private final CountDownLatch latch;
     private final String name;
     private int pScore;
-    private List<Integer> pNumbers = Collections.synchronizedList(new ArrayList<>());
 
-    Random r = new Random();
+    static Random r = new Random();
 
     public Player(CountDownLatch latch, String name, int pScore) {
       this.latch = latch;
@@ -24,17 +23,12 @@ public class Task {
     @Override
     public void run() {
       while (latch.getCount() > 0) {
-        int number = r.nextInt(101);
-        if (!pNumbers.contains(number)) {
-          pNumbers.add(number);
-        }
+        int number = r.nextInt(100);
         if (!usednumbers.contains(number)) {
           pScore++;
           usednumbers.add(number);
-          score.put(name, pScore);
-        }
-        if (pNumbers.size() == 100) {
           latch.countDown();
+          score.put(name, pScore);
         }
         try {
           Thread.sleep(1);
@@ -74,7 +68,7 @@ public class Task {
 
   public static void main(String[] args) {
     var executor = Executors.newCachedThreadPool();
-    var latch = new CountDownLatch(1);
+    var latch = new CountDownLatch(100);
     executor.submit(new Player(latch, "player1", 0));
     executor.submit(new Player(latch, "player2", 0));
     executor.submit(new Player(latch, "player3", 0));
