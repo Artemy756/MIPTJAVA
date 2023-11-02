@@ -1,8 +1,10 @@
-package org.example;
+package Bank;
+
+import Bank.Bank;
 
 import java.util.Map;
 
-import static org.example.Bank.users;
+import static Bank.Bank.users;
 
 public class Main {
     public static void main(String[] args) {

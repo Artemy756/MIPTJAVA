@@ -1,4 +1,4 @@
-package org.example;
+package Bank;
 
 public class Account {
     public int money;
